@@ -65,7 +65,6 @@ function Calculate()
 
 	if(String_Tuning.value <= -13) nDensity = 0.1;
 	else nDensity = parseFloat(document.getElementById("String_Tuning").options[document.getElementById('String_Tuning').selectedIndex].getAttribute("specificDensity"));
-	alert(nDensity);
 	if( isNaN(nValue) )
 		alert("Illegal value in String Length");
 	else
