@@ -1,0 +1,92 @@
+<html>
+	<body>
+	String length:
+	<input type="text" name="StrLen" size="6" id="StrLen"> inches.
+	<div style="display:hidden;">
+	<br/>
+	<input type="hidden" id="density">
+	Select open tuning:
+	<select size="1" name="String_Tuning" id="String_Tuning">
+		<option>Please select a note</option>
+		<option specificDensity="0.17" value="14">b'</option> 
+		<option specificDensity="0.17" value="12">a'</option>
+		
+		<option specificDensity="0.16" value="10">g</option>
+		
+		<option specificDensity="0.15" value="7">e'</option>
+		
+		<option specificDensity="0.15" value="5">d'</option> 
+		<option specificDensity="0.15" value="4">c#'</option> 
+		<option specificDensity="0.15" value="3">c' (octave above middle c)</option> 
+		<option specificDensity="0.14" value="2">b</option> 
+		<option specificDensity="0.13" value="1">a#</option> 
+		<option specificDensity="0.13" value="0">a</option> 
+		<option specificDensity="0.13" value="-1">g#</option> 
+		<option specificDensity="0.13" value="-2">g</option> 
+		<option specificDensity="0.12" value="-3">f#</option> 
+		<option specificDensity="0.12" value="-4">f</option> 
+		<option specificDensity="0.12" value="-5">e</option> 
+		<option specificDensity="0.12" value="-6">d#</option> 
+		<option specificDensity="0.11" value="-7">d</option> 
+		<option specificDensity="0.11" value="-8">c#</option> 
+		<option specificDensity="0.11" value="-9">c (middle c)</option> 
+		<option specificDensity="0.11" value="-10">B</option> 
+		<option specificDensity="0.11" value="-11">A#</option> 
+		<option specificDensity="0.11" value="-12">A</option> 
+		<option value="-13">G#</option> 
+		<option value="-14">G</option> 
+		<option value="-15">F#</option> 
+		<option value="-16">F</option> 
+		<option value="-17">E</option> 
+		<option value="-18">D#</option> 
+		<option value="-19">D</option> 
+		<option value="-20">C#</option> 
+		<option value="-21">C (octave below middle c)</option> 
+		<option value="-22">B'</option> 
+		<option value="-23">A'#</option> 
+		<option value="-24">A'</option> 
+		<option value="-25">G'#</option> 
+		<option value="-26">G'</option> 
+		<option value="-27">E'</option> 
+		<option value="-28">D'#</option> 
+		<option value="-29">D'</option> 
+	</select>
+	<br/>
+	<input type="button" value="Calculate Size" name="Calculate_Size" id="Calculate" onclick="Calculate()">
+	<input type="text" name="String_Choice" size="8" id="String_Choice">
+</body>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript"> 
+
+function Calculate()
+{
+	nValue = parseFloat(StrLen.value);
+
+	if(String_Tuning.value <= -13) nDensity = 0.1;
+	else nDensity = parseFloat(document.getElementById("String_Tuning").options[document.getElementById('String_Tuning').selectedIndex].getAttribute("specificDensity"));
+	alert(nDensity);
+	if( isNaN(nValue) )
+		alert("Illegal value in String Length");
+	else
+	{
+		nMult = Math.pow(2.0, (1/12));
+		nStep = String_Tuning.value;
+		if(nStep < 0)
+		{
+			nStep *= -1;
+			nFreq = 440.0 / Math.pow(nMult,nStep);
+		}
+		else
+			nFreq = 440.0*Math.pow(nMult,nStep);
+		nDividend = Math.sqrt( (13.8*386.4)/(Math.PI*nDensity) );
+		nFinalValue = nDividend * 1000/ (nFreq*nValue);
+		String_Choice.value = Math.round(nFinalValue);
+	}
+}
+//$("option").each(function(){document.write(
+//	'{specificDensity:' + $(this).attr('specificdensity') + ', value:' + $(this).val() + ', note:"' + $(this).text() + '"},'
+//);});
+</script>
+</head>
+</html>
